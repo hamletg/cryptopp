@@ -46,7 +46,17 @@
   <PropertyGroup Label="UserMacros" />
   <!-- End of Visual Studio boilerplate -->
   <!-- All Configurations -->
-  <PropertyGroup Label="All Configurations">
+  <PropertyGroup Condition="'$(Configuration)'=='Debug'" Label="Debug Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <TargetName>cryptoppd</TargetName>
+    <TargetExt>.dll</TargetExt>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <OutDir>$(Platform)\DLL_Output\$(Configuration)\</OutDir>
+    <IntDir>$(Platform)\$(ProjectName)\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)'=='Release'" Label="Release Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <TargetName>cryptopp</TargetName>
     <TargetExt>.dll</TargetExt>
@@ -69,23 +79,23 @@
     <Link>
       <ErrorReporting>NoErrorReport</ErrorReporting>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <ProgramDatabaseFile>$(OutDir)\cryptopp.pdb</ProgramDatabaseFile>
+      <ProgramDatabaseFile>$(OutDir)\cryptoppd.pdb</ProgramDatabaseFile>
       <BaseAddress>0x42900000</BaseAddress>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
       <PreventDllBinding>true</PreventDllBinding>
-      <OutputFile>$(OutDir)\cryptopp.dll</OutputFile>
-      <ImportLibrary>$(TargetDir)\cryptopp.lib</ImportLibrary>
+      <OutputFile>$(OutDir)\$(TargetFileName)</OutputFile>
+      <ImportLibrary>$(TargetDir)\cryptoppd.lib</ImportLibrary>
     </Link>
   </ItemDefinitionGroup>
   <!-- Debug Configurations -->
   <ItemDefinitionGroup Condition="'$(Configuration)'=='Debug'" Label="Debug Configuration">
     <ClCompile>
-      <PreprocessorDefinitions>CRYPTOPP_EXPORTS;CRYPTOPP_ENABLE_COMPLIANCE_WITH_FIPS_140_2=1;USE_PRECOMPILED_HEADERS</PreprocessorDefinitions>
+      <PreprocessorDefinitions>CRYPTOPP_EXPORTS;CRYPTOPP_ENABLE_COMPLIANCE_WITH_FIPS_140_2=0;USE_PRECOMPILED_HEADERS;CRYPTOPP_NO_NEW_DELETE</PreprocessorDefinitions>
       <Optimization>Disabled</Optimization>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -95,14 +105,14 @@
   <!-- Release Configurations -->
   <ItemDefinitionGroup Condition="'$(Configuration)'=='Release'" Label="Release Configuration">
     <ClCompile>
-      <PreprocessorDefinitions>NDEBUG;CRYPTOPP_EXPORTS;CRYPTOPP_ENABLE_COMPLIANCE_WITH_FIPS_140_2=1;USE_PRECOMPILED_HEADERS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;CRYPTOPP_EXPORTS;CRYPTOPP_ENABLE_COMPLIANCE_WITH_FIPS_140_2=0;USE_PRECOMPILED_HEADERS;CRYPTOPP_NO_NEW_DELETE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <OmitFramePointers>true</OmitFramePointers>
       <Optimization>MaxSpeed</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <StringPooling>true</StringPooling>
-      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>

@@ -143,6 +143,7 @@ static void SetNewAndDeleteFunctionPointers()
 // Cast from FARPROC to funcptr with args
 #pragma warning(default: 4191)
 
+#ifndef CRYPTOPP_NO_NEW_DELETE
 void * operator new (size_t size)
 {
 	if (!s_pNew)
@@ -165,5 +166,7 @@ void operator delete [] (void * p)
 {
 	operator delete (p);
 }
+
+#endif
 
 #endif	// CRYPTOPP_EXPORTS
